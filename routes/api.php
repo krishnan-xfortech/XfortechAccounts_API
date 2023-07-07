@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ExpenseCategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,9 +22,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login', [LoginController::class, 'checkLogin']);
 
-Route::group(['middleware'=>['auth']], function(){
+Route::group(['middleware'=>['user_auth']], function(){
 
-    // Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::prefix('expense-category')->group(function(){
+        Route::get('/',[ExpenseCategoryController::class,'index']);
+        Route::post('/create',[ExpenseCategoryController::class,'create']);
+        Route::post('/update/{id}',[ExpenseCategoryController::class,'update']);
+        Route::get('/delete/{id}',[ExpenseCategoryController::class,'delete']);
+    });
+
     Route::get('/logout', [LoginController::class, 'logout']);
 
 });
