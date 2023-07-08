@@ -27,6 +27,7 @@ Route::group(['middleware'=>['user_auth']], function(){
     Route::prefix('expense-category')->group(function(){
         Route::get('/',[ExpenseCategoryController::class,'index']);
         Route::post('/create',[ExpenseCategoryController::class,'create']);
+        Route::get('/update/{id}',[ExpenseCategoryController::class,'edit']);
         Route::post('/update/{id}',[ExpenseCategoryController::class,'update']);
         Route::get('/delete/{id}',[ExpenseCategoryController::class,'delete']);
     });

@@ -17,19 +17,27 @@ class ExpenseCategoryController extends Controller
 
     public function create(Request $request){
         $category = new ExpenseCategory;
-        $category->category_name = $request->category_name;
-        $category->category_description = $request->category_description;
+        $category->category_name = $request->name;
+        $category->category_description = $request->description;
         $category->save();
         return response()->json([
             "success" => true,
         ]);
     }
 
+    public function edit(Request $request, $id)
+    {
+        $category = ExpenseCategory::findOrFail($id);
+        return response()->json([
+            "success" => true,
+            "data" => $category
+        ]);
+    }
     public function update(Request $request, $id)
     {
         $category = ExpenseCategory::findOrFail($id);
-        $category->category_name = $request->category_name;
-        $category->category_description = $request->category_description;
+        $category->category_name = $request->name;
+        $category->category_description = $request->description;
         $category->save();
         return response()->json([
             "success" => true,
